@@ -2,7 +2,7 @@ import sys
 import os
 current_dir = os.path.dirname(os.path.abspath(__file__))
 src_path = os.path.join(current_dir, "src")
-sys.path.insert(0, src_path) # this was basically only necessary b/c I moved this over from another path
+sys.path.insert(0, src_path) # this was basically only necessary b/c I moved this over from another path. absolute nightmare
 from weird_ai.tokenizer import SimpleCharacterTokenizer
 from collections import Counter # easier way to do it
 import re

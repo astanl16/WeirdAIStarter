@@ -1,4 +1,7 @@
 from datasets import load_dataset
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 from weird_ai.config import RAW_DATA_DIR, SAMPLE_LYRICS_FILE, PROCESSED_DATA_DIR
 
 """
