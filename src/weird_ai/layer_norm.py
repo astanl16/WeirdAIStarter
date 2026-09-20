@@ -10,10 +10,7 @@ class LayerNorm(nn.Module):
 
     def forward(self, x):
 
-        # TODO
-        # Compute mean
-        # Compute variance
-        # Normalize
-        # Apply scale and shift
-
-        raise NotImplementedError()
+        mean = x.mean(dim=-1, keepdim=True)
+        var = x.var(dim=-1, keepdim=True, unbiased=False)
+        x_norm = (x - mean) / torch.sqrt(var)
+        return self.scale * x_norm + self.shift

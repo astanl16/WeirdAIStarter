@@ -2,12 +2,12 @@ import torch
 import torch.nn as nn
 
 class GELU(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.gelu = nn.GELU(approximate='tanh')
 
     def forward(self, x):
-
-        # TODO
-
-        raise NotImplementedError()
+        return self.gelu(x)
     
     
 class FeedForward(nn.Module):
@@ -16,7 +16,9 @@ class FeedForward(nn.Module):
         super().__init__()
 
         self.layers = nn.Sequential(
-            # TODO
+            nn.Linear(emb_dim, 4 * emb_dim),
+            GELU(),
+            nn.Linear(4 * emb_dim, emb_dim),
         )
 
     def forward(self, x):
