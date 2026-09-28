@@ -139,7 +139,7 @@ class TinyLyricsClassifier(nn.Module):
 
     def forward(self, input_ids):
         embeddings = self.embedding(input_ids)
-        pooled = embeddings.mean(dim=1)     # (batch, emb_dim)
+        pooled = embeddings.mean(dim=1)
         logits = self.classifier(pooled)
         return logits
 
