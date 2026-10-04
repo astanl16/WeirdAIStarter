@@ -22,11 +22,8 @@ class InstructionDataset(Dataset):
         for entry in data:
             full_text = format_full_example(entry)
 
-            # TODO:
-            # Encode full_text using tokenizer.encode(...)
-            # Append the encoded token IDs to self.encoded_texts.
-
-            raise NotImplementedError("Encode each formatted example.")
+            encoded = self.tokenizer.encode(full_text)
+            self.encoded_texts.append(encoded)
 
     def __getitem__(self, index):
         return self.encoded_texts[index]

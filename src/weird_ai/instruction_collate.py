@@ -15,11 +15,7 @@ def custom_collate_fn(
     """
     Pad variable-length token ID lists, create shifted targets, and mask extra padding.
     """
-
-    # TODO:
-    # Find the maximum length in the batch.
-    # Add 1 because we append a padding/end token before creating targets.
-    batch_max_length = None
+    batch_max_length = max(len(item) + 1 for item in batch)
 
     inputs_lst = []
     targets_lst = []
@@ -27,24 +23,32 @@ def custom_collate_fn(
     for item in batch:
         new_item = item.copy()
 
-        # TODO: append one pad token to new_item.
+        # append one pad token to new_item
+        new_item.append(pad_token_id)
 
-        # TODO: pad new_item to batch_max_length.
-        padded = None
+        # pad new_item to batch_max_length
+        padded = new_item + [pad_token_id] * (batch_max_length - len(new_item))
 
-        # TODO: inputs are padded[:-1], targets are padded[1:].
-        inputs = None
-        targets = None
+        # inputs are padded[:-1], targets are padded[1:]
+        inputs = torch.tensor(padded[:-1])
+        targets = torch.tensor(padded[1:])
 
-        # TODO: replace all but the first pad_token_id in targets with ignore_index.
+        # replace all but the first pad_token_id in targets with ignore_index
+        mask = targets == pad_token_id
+        indices = torch.nonzero(mask).squeeze()
+        if indices.numel() > 1:
+            targets[indices[1:]] = ignore_index
 
-        # TODO: if allowed_max_length is not None, truncate inputs and targets.
+        # if allowed_max_length is not None, truncate inputs and targets
+        if allowed_max_length is not None:
+            inputs = inputs[:allowed_max_length]
+            targets = targets[:allowed_max_length]
 
         inputs_lst.append(inputs)
         targets_lst.append(targets)
 
-    # TODO: stack input and target tensors, then move them to device.
-    inputs_tensor = None
-    targets_tensor = None
+    # stack input and target tensors, then move them to device
+    inputs_tensor = torch.stack(inputs_lst).to(device)
+    targets_tensor = torch.stack(targets_lst).to(device)
 
     return inputs_tensor, targets_tensor
