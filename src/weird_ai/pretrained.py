@@ -25,15 +25,12 @@ import torch
 
 try:
     from transformers import AutoModelForCausalLM, AutoTokenizer
-except ImportError:  # pragma: no cover - handled by student setup or tests
+except ImportError:
     AutoModelForCausalLM = None
     AutoTokenizer = None
 
 from weird_ai.reasoning import build_reasoning_prompt
 
-
-# This tiny model is useful for early experiments because it downloads quickly.
-# Instructors may replace this with a different model for demonstrations.
 DEFAULT_MODEL_NAME = "sshleifer/tiny-gpt2"
 
 
