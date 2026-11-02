@@ -1,4 +1,5 @@
 import torch
+import torch.nn.functional as F
 
 
 def text_to_token_ids(text, tokenizer):
