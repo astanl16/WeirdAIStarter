@@ -41,3 +41,4 @@ wandb/
 Thumbs.db
 .vscode/
 .idea/
+deepseek-r1-math-train.json
